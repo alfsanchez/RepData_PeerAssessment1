@@ -32,14 +32,10 @@ head(summarizeddata) # check first few rows
 ```{r, echo=TRUE, warning=FALSE}
 # Create a histogram of the total number of steps taken each day
 
-png(filename="histogram_noimputation.png",width=480,height=480,units="px",bg="white")
-
 hist(activitydata$steps,col="Light blue", main="Histogram of Total Number of Steps", xlab="Number of Steps")
 abline(v=mean(activitydata$steps,na.rm=TRUE),col="Blue",lwd=2, lty=2)
 abline(v=median(activitydata$steps,na.rm=TRUE),col="Red",lwd=2, lty=2)
 legend("topright",lty=c(2,2),lwd=c(1,1),col=c("Blue","Red"),bty="n",legend=c("Mean","Median"))
-
-dev.off()
 
 #Calculate and report the mean and median total number of steps taken per day
 mean(activitydata$steps,na.rm=TRUE) # Show the value of the mean (blue dashed line)
@@ -53,12 +49,8 @@ median(activitydata$steps,na.rm=TRUE) # Show the value of the median (red dashed
 # Make a time series plot (i.e. type = "l") of the 5-minute interval (x-axis) and the average number of steps taken, 
 # averaged across all days (y-axis)
 
-png(filename="timeseries.png",width=480,height=480,units="px",bg="white")
-
 plot(summarizeddata$interval,summarizeddata$steps,type="l",col="Blue",main="Average Number of Steps Taken", xlab="5-minute interval", ylab="Average # of Steps")
 abline(v=summarizeddata[which.max(summarizeddata$steps),2],col="Red",lwd=2, lty=2)
-
-dev.off()
 
 #Which 5-minute interval, on average across all the days in the dataset, contains the maximum number of steps?
 max(summarizeddata$steps) # Show maximum average number of steps
@@ -97,18 +89,12 @@ head(newactivitydata)
 
 # Make a histogram of the total number of steps taken each day 
 
-png(filename="histogram_withimputation.png",width=480,height=480,units="px",bg="white")
-
 hist(newactivitydata$steps,col="Light blue", main="Histogram of Total Number of Steps (With Imputation)", xlab="Number of Steps")
 abline(v=mean(newactivitydata$steps,na.rm=TRUE),col="Blue",lwd=2, lty=2)
 abline(v=median(newactivitydata$steps,na.rm=TRUE),col="Red",lwd=2, lty=2)
 legend("topright",lty=c(2,2),lwd=c(1,1),col=c("Blue","Red"),bty="n",legend=c("Mean","Median"))
 
-dev.off()
-
 # Comparing with and without imputation
-
-png(filename="histogram_comparison.png",width=480,height=480,units="px",bg="white")
 
 par(mfrow=c(2,1))
 
@@ -121,8 +107,6 @@ hist(newactivitydata$steps,col="Light blue", main="Total Number of Steps (With I
 abline(v=mean(newactivitydata$steps,na.rm=TRUE),col="Blue",lwd=2, lty=2)
 abline(v=median(newactivitydata$steps,na.rm=TRUE),col="Red",lwd=2, lty=2)
 legend("topright",lty=c(2,2),lwd=c(1,1),col=c("Blue","Red"),bty="n",legend=c("Mean","Median"))
-
-dev.off()
 
 # Calculate and report the mean and median total number of steps taken per day 
 
@@ -171,9 +155,6 @@ summarizeddata2 <- aggregate(weekdata,by=list(interval,weekflag),FUN=mean,na.rm=
 colnames(summarizeddata2) <- c("interval","weekflag","steps") # Retain original header names
 head(summarizeddata2) # check first few rows
 
-png(filename="timeseries_weekcomparison.png",width=480,height=480,units="px",bg="white")
-
 xyplot(steps ~ interval | weekflag, data = summarizeddata2, type="l", xlab="Interval", ylab="Number of steps", layout = c(1, 2))
 
-dev.off()
 ```

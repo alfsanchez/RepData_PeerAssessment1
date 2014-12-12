@@ -36,6 +36,19 @@ head(activitydata) # check first few rows
 
 ```r
 attach(activitydata)
+```
+
+```
+## The following objects are masked from weekdata:
+## 
+##     date, interval, steps
+## 
+## The following objects are masked from activitydata (pos = 4):
+## 
+##     date, interval, steps
+```
+
+```r
 summarizeddata <- aggregate(activitydata,by=list(interval),FUN=mean,na.rm=TRUE)[c(2,4)]
 head(summarizeddata) # check first few rows
 ```
@@ -55,13 +68,21 @@ head(summarizeddata) # check first few rows
 
 ```r
 # Create a histogram of the total number of steps taken each day
+
+png(filename="histogram_noimputation.png",width=480,height=480,units="px",bg="white")
+
 hist(activitydata$steps,col="Light blue", main="Histogram of Total Number of Steps", xlab="Number of Steps")
 abline(v=mean(activitydata$steps,na.rm=TRUE),col="Blue",lwd=2, lty=2)
 abline(v=median(activitydata$steps,na.rm=TRUE),col="Red",lwd=2, lty=2)
 legend("topright",lty=c(2,2),lwd=c(1,1),col=c("Blue","Red"),bty="n",legend=c("Mean","Median"))
+
+dev.off()
 ```
 
-![plot of chunk unnamed-chunk-2](figure/unnamed-chunk-2-1.png) 
+```
+## pdf 
+##   2
+```
 
 ```r
 #Calculate and report the mean and median total number of steps taken per day
@@ -86,11 +107,19 @@ median(activitydata$steps,na.rm=TRUE) # Show the value of the median (red dashed
 ```r
 # Make a time series plot (i.e. type = "l") of the 5-minute interval (x-axis) and the average number of steps taken, 
 # averaged across all days (y-axis)
+
+png(filename="timeseries.png",width=480,height=480,units="px",bg="white")
+
 plot(summarizeddata$interval,summarizeddata$steps,type="l",col="Blue",main="Average Number of Steps Taken", xlab="5-minute interval", ylab="Average # of Steps")
 abline(v=summarizeddata[which.max(summarizeddata$steps),2],col="Red",lwd=2, lty=2)
+
+dev.off()
 ```
 
-![plot of chunk unnamed-chunk-3](figure/unnamed-chunk-3-1.png) 
+```
+## pdf 
+##   2
+```
 
 ```r
 #Which 5-minute interval, on average across all the days in the dataset, contains the maximum number of steps?
@@ -158,17 +187,25 @@ head(newactivitydata)
 ```r
 # Make a histogram of the total number of steps taken each day 
 
+png(filename="histogram_withimputation.png",width=480,height=480,units="px",bg="white")
+
 hist(newactivitydata$steps,col="Light blue", main="Histogram of Total Number of Steps (With Imputation)", xlab="Number of Steps")
 abline(v=mean(newactivitydata$steps,na.rm=TRUE),col="Blue",lwd=2, lty=2)
 abline(v=median(newactivitydata$steps,na.rm=TRUE),col="Red",lwd=2, lty=2)
 legend("topright",lty=c(2,2),lwd=c(1,1),col=c("Blue","Red"),bty="n",legend=c("Mean","Median"))
+
+dev.off()
 ```
 
-![plot of chunk unnamed-chunk-5](figure/unnamed-chunk-5-1.png) 
+```
+## pdf 
+##   2
+```
 
 ```r
 # Comparing with and without imputation
 
+png(filename="histogram_comparison.png",width=480,height=480,units="px",bg="white")
 
 par(mfrow=c(2,1))
 
@@ -181,9 +218,14 @@ hist(newactivitydata$steps,col="Light blue", main="Total Number of Steps (With I
 abline(v=mean(newactivitydata$steps,na.rm=TRUE),col="Blue",lwd=2, lty=2)
 abline(v=median(newactivitydata$steps,na.rm=TRUE),col="Red",lwd=2, lty=2)
 legend("topright",lty=c(2,2),lwd=c(1,1),col=c("Blue","Red"),bty="n",legend=c("Mean","Median"))
+
+dev.off()
 ```
 
-![plot of chunk unnamed-chunk-5](figure/unnamed-chunk-5-2.png) 
+```
+## pdf 
+##   2
+```
 
 ```r
 # Calculate and report the mean and median total number of steps taken per day 
@@ -262,7 +304,15 @@ attach(weekdata)
 ```
 
 ```
-## The following objects are masked from activitydata:
+## The following objects are masked from activitydata (pos = 3):
+## 
+##     date, interval, steps
+## 
+## The following objects are masked from weekdata (pos = 4):
+## 
+##     date, interval, steps, weekday, weekflag
+## 
+## The following objects are masked from activitydata (pos = 5):
 ## 
 ##     date, interval, steps
 ```
@@ -284,7 +334,14 @@ head(summarizeddata2) # check first few rows
 ```
 
 ```r
+png(filename="timeseries_weekcomparison.png",width=480,height=480,units="px",bg="white")
+
 xyplot(steps ~ interval | weekflag, data = summarizeddata2, type="l", xlab="Interval", ylab="Number of steps", layout = c(1, 2))
+
+dev.off()
 ```
 
-![plot of chunk unnamed-chunk-6](figure/unnamed-chunk-6-1.png) 
+```
+## pdf 
+##   2
+```
